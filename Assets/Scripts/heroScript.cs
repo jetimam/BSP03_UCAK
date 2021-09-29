@@ -7,12 +7,18 @@ public class heroScript : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     private Vector3 movement;
-    private float speed = 1;
+    private float speed = 2;
+    private float camHeight, camWidth;
     
     // Start is called before the first frame update
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+
+        Camera camera = Camera.main;
+
+        camHeight = 2 * camera.orthographicSize;
+        camWidth = camHeight * camera.aspect;
     }
 
     // Update is called once per frame
@@ -22,7 +28,6 @@ public class heroScript : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         movement = new Vector3(x, y, 0); //The movement vector
-        rigidBody.velocity = movement * speed;
 
         if (movement.x > 0) //Checks if player is moving right.
         {
@@ -33,9 +38,12 @@ public class heroScript : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        transform.Translate(movement * Time.deltaTime); //Moves the player.
-
-        //4.850 IS THE CAMERA BOUNDARY POSITION
-
+        if (transform.position.y < camHeight/2 && //Checks if the player is in the camera.
+            transform.position.y > -camHeight/2 && 
+            transform.position.x < camWidth/2  &&
+            transform.position.x > -camWidth/2)
+        {
+            transform.Translate((movement * speed) * Time.deltaTime); //Moves the player.
+        }
     }
 }
