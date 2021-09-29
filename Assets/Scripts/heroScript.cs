@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class heroScript : MonoBehaviour
 {
+    private Rigidbody2D rigidBody;
 
-    private BoxCollider2D boxCollider;
-
-    private Vector3 moveDelta;
+    private Vector3 movement;
+    private float speed = 1;
     
     // Start is called before the first frame update
     private void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -21,18 +21,21 @@ public class heroScript : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        moveDelta = new Vector3(x, y, 0); //The movement vector
+        movement = new Vector3(x, y, 0); //The movement vector
+        rigidBody.velocity = movement * speed;
 
-        if (moveDelta.x > 0) //Checks if player is moving right.
+        if (movement.x > 0) //Checks if player is moving right.
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        else if (moveDelta.x < 0) //Checks if player is moving left.
+        else if (movement.x < 0) //Checks if player is moving left.
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        transform.Translate(moveDelta * Time.deltaTime); //Moves the player.
+        transform.Translate(movement * Time.deltaTime); //Moves the player.
+
+        //4.850 IS THE CAMERA BOUNDARY POSITION
 
     }
 }
