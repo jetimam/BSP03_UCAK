@@ -1,4 +1,5 @@
-Study and implementation of Dijkstra's and A* pathfinding algorithms for a game of tag. A Bachelor Semester Project by Umut Ucak.
+Study and implementation of Dijkstra's and A* pathfinding algorithms for a game of tag. A Bachelor Semester Project by Umut Ucak. Activity report link below:
+https://docs.google.com/spreadsheets/d/1VsJ7idaLD1-H399FrredfBYYr_Tv9wYj2a5Ua_a5NCk/edit#gid=1449240152
 
 -------------
 
