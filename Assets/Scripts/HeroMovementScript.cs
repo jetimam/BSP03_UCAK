@@ -60,7 +60,16 @@ public class HeroMovementScript : MonoBehaviour
 
     public void MoveAgent(Vector3 movement)
     {
-        transform.Translate((movement * playerSpeed) * Time.deltaTime);
+        if (movement.y > 0)
+        {
+            transform.Translate((movement * playerSpeed) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate((movement * playerSpeed) * Time.deltaTime);
+        }
+
+        
     }
 
     public void WallPush(float camHeight, float camWidth)
@@ -90,4 +99,16 @@ public class HeroMovementScript : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
+
+    /*public void PlayerRotateAngles(Vector3 movement)
+    {
+        if (movement.x > 0) //Checks if player is moving right.
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (movement.x < 0) //Checks if player is moving left.
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+    }*/
 }
