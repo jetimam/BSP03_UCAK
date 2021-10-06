@@ -7,7 +7,6 @@ public class HeroMovementScript : MonoBehaviour
     private Rigidbody2D rigidBody;
     private BoxCollider2D boxCollider;
 
-    private Vector3 movement, wallVector;
     private float speed = 2;
     private float camHeight, camWidth, hitboxHeight, hitboxWidth;
     
@@ -32,7 +31,7 @@ public class HeroMovementScript : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        movement = new Vector3(x, y, 0); //The movement vector
+        Vector3 movement = new Vector3(x, y, 0); //The movement vector
 
         if (movement.x > 0) //Checks if player is moving right.
         {
@@ -52,6 +51,7 @@ public class HeroMovementScript : MonoBehaviour
         }
         else
         {
+            Vector3 wallVector;
             if (transform.position.y > camHeight || transform.position.y < -camHeight)
             {
                 wallVector = new Vector3(0, 0 - transform.position.y, 0); //Pushes the player from the upper and lower walls
