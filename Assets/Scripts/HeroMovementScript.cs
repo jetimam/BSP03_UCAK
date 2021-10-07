@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class HeroMovementScript : MonoBehaviour
 {
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody; //The components of the game object.
     private BoxCollider2D boxCollider;
+    private SpriteRenderer spriteRenderer;
 
-    private float playerSpeed = 2;
     private float camHeight, camWidth, hitboxHeight, hitboxWidth;
     
     // Start is called before the first frame update
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-
         boxCollider = GetComponent<BoxCollider2D>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         InitializeBounds(boxCollider);
     }
@@ -28,7 +29,7 @@ public class HeroMovementScript : MonoBehaviour
 
         Vector3 movement = new Vector3(x, y, 0); //The movement vector
 
-        PlayerRotate(movement);
+        PlayerRotate(movement, spriteRenderer);
 
         if (InCamera(camHeight, camWidth))
         {
@@ -60,6 +61,8 @@ public class HeroMovementScript : MonoBehaviour
 
     public void MoveAgent(Vector3 movement)
     {
+        float playerSpeed = 2.0f;
+
         if (movement.y > 0)
         {
             transform.Translate((movement * playerSpeed) * Time.deltaTime);
@@ -68,8 +71,6 @@ public class HeroMovementScript : MonoBehaviour
         {
             transform.Translate((movement * playerSpeed) * Time.deltaTime);
         }
-
-        
     }
 
     public void WallPush(float camHeight, float camWidth)
@@ -88,27 +89,15 @@ public class HeroMovementScript : MonoBehaviour
             transform.Translate(wallVector * Time.deltaTime);
     }
 
-    public void PlayerRotate(Vector3 movement)
+    public void PlayerRotate(Vector3 movement, SpriteRenderer spriteRenderer)
     {
         if (movement.x > 0) //Checks if player is moving right.
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            spriteRenderer.flipX = false;
         }
         else if (movement.x < 0) //Checks if player is moving left.
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            spriteRenderer.flipX = true;
         }
     }
-
-    /*public void PlayerRotateAngles(Vector3 movement)
-    {
-        if (movement.x > 0) //Checks if player is moving right.
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else if (movement.x < 0) //Checks if player is moving left.
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-        }
-    }*/
 }
