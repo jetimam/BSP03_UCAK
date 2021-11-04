@@ -27,7 +27,8 @@ public class HeroMovementScript : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(x, y, 0); //The movement vector
+        Vector3 movement = new Vector3(x, y, 0);
+    
 
         PlayerRotate(movement, spriteRenderer);
 
@@ -77,27 +78,20 @@ public class HeroMovementScript : MonoBehaviour
     {
         Vector3 wallVector;
 
-            if (transform.position.y > camHeight || transform.position.y < -camHeight)
-            {
-                wallVector = new Vector3(0, 0 - transform.position.y, 0); //Pushes the player from the upper and lower walls
-            }
-            else
-            {
-                wallVector = new Vector3(0 - transform.position.x, 0, 0); //Pushes the player from the left and right walls
-            }
+        if (transform.position.y > camHeight || transform.position.y < -camHeight)
+        {
+            wallVector = new Vector3(0, 0 - transform.position.y, 0); //Pushes the player from the upper and lower walls
+        }
+        else
+        {
+            wallVector = new Vector3(0 - transform.position.x, 0, 0); //Pushes the player from the left and right walls
+        }
 
-            transform.Translate(wallVector * Time.deltaTime);
+        transform.Translate(wallVector * Time.deltaTime);
     }
 
     public void PlayerRotate(Vector3 movement, SpriteRenderer spriteRenderer)
     {
-        if (movement.x > 0) //Checks if player is moving right.
-        {
-            spriteRenderer.flipX = false;
-        }
-        else if (movement.x < 0) //Checks if player is moving left.
-        {
-            spriteRenderer.flipX = true;
-        }
+        spriteRenderer.flipX = (movement.x < 0);
     }
 }
