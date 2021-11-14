@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeroMovementScript : MonoBehaviour
 {
+    public float playerSpeed = 2.0f;
+
     private Rigidbody2D rigidBody; //The components of the game object.
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
@@ -15,7 +17,6 @@ public class HeroMovementScript : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         InitializeBounds(boxCollider);
@@ -29,17 +30,8 @@ public class HeroMovementScript : MonoBehaviour
 
         Vector3 movement = new Vector3(x, y, 0);
     
-
-        PlayerRotate(movement, spriteRenderer);
-
-        if (InCamera(camHeight, camWidth))
-        {
-            MoveAgent(movement);
-        }
-        else
-        {
-            WallPush(camHeight, camWidth);
-        }
+        //PlayerRotate(movement, spriteRenderer);
+        MoveAgent(movement);
     }
 
     public void InitializeBounds(BoxCollider2D boxCollider)
@@ -62,8 +54,6 @@ public class HeroMovementScript : MonoBehaviour
 
     public void MoveAgent(Vector3 movement)
     {
-        float playerSpeed = 2.0f;
-
         if (movement.y > 0)
         {
             transform.Translate((movement * playerSpeed) * Time.deltaTime);
