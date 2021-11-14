@@ -7,22 +7,20 @@ public class HeroMovementScript : MonoBehaviour
     public float playerSpeed = 2.0f;
 
     private Rigidbody2D rigidBody; //The components of the game object.
-    private BoxCollider2D boxCollider;
+    private CircleCollider2D circleCollider;
     private SpriteRenderer spriteRenderer;
 
     private float camHeight, camWidth, hitboxHeight, hitboxWidth;
-    
-    // Start is called before the first frame update
+
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        InitializeBounds(boxCollider);
+        InitializeBounds(circleCollider);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         float x = Input.GetAxis("Horizontal");
@@ -30,15 +28,14 @@ public class HeroMovementScript : MonoBehaviour
 
         Vector3 movement = new Vector3(x, y, 0);
     
-        //PlayerRotate(movement, spriteRenderer);
-        MoveAgent(movement);
+        transform.Translate((movement * playerSpeed) * Time.deltaTime);
     }
 
-    public void InitializeBounds(BoxCollider2D boxCollider)
+    public void InitializeBounds(CircleCollider2D circleCollider)
     {
         Camera camera = Camera.main;
 
-        hitboxHeight = boxCollider.size.x / 2; //length from the center to the edge
+        hitboxHeight = circleCollider.radius / 2; //length from the center to the edge
 
         camHeight = camera.orthographicSize - hitboxHeight; //length from the center to the edge
         camWidth = camHeight * camera.aspect;
