@@ -18,7 +18,7 @@ public class MazePrinter : MonoBehaviour
 
     void Update() {}
 
-    public void Draw(WallState[,] maze)
+    public void Draw(MazeGenerator.WallState[,] maze)
     {
         for (int i = 0; i < width; i++)
         {
@@ -27,13 +27,13 @@ public class MazePrinter : MonoBehaviour
                 var cell = maze[i,j];
                 var position = new Vector3(-width/2 + i, -height/2 + j, 0);
 
-                if (cell.HasFlag(WallState.UP))
+                if (cell.HasFlag(MazeGenerator.WallState.UP))
                 {
                     var topWall = Instantiate(wallPrefab, transform) as Transform;
                     topWall.position = position + new Vector3(0, size/2, 0);
                     topWall.localScale = new Vector3(size, topWall.localScale.x, topWall.localScale.y);
                 }
-                if (cell.HasFlag(WallState.LEFT))
+                if (cell.HasFlag(MazeGenerator.WallState.LEFT))
                 {
                     var leftWall = Instantiate(wallPrefab, transform) as Transform;
                     leftWall.position = position + new Vector3(-size/2, 0, 0);
@@ -43,16 +43,17 @@ public class MazePrinter : MonoBehaviour
 
                 if (i == width - 1)
                 {
-                    if (cell.HasFlag(WallState.RIGHT))
+                    if (cell.HasFlag(MazeGenerator.WallState.RIGHT))
                     {
                         var rightWall = Instantiate(wallPrefab, transform) as Transform;
-                        rightWall.position = position + new Vector3(+size/2, 0, 0);  //WARNING
+                        rightWall.position = position + new Vector3(size/2, 0, 0);
                         rightWall.localScale = new Vector3(size, rightWall.localScale.x, rightWall.localScale.y);
+                        rightWall.eulerAngles = new Vector3(0, 0, 90);
                     }
                 }
                 if (j == 0)
                 {
-                    if (cell.HasFlag(WallState.DOWN))
+                    if (cell.HasFlag(MazeGenerator.WallState.DOWN))
                     {
                         var bottomWall = Instantiate(wallPrefab, transform) as Transform;
                         bottomWall.position = position + new Vector3(0, -size/2, 0);

@@ -14,7 +14,13 @@ public class MazeGenerator : MonoBehaviour
         VISITED = 128
     }
 
-    public WallState[,] Generate(int width, int height)
+    public static WallState[,] DFS(WallState[,] maze)
+    {
+        Stack<WallState[,]> visited = new Stack<WallState[,]>();
+        return maze;
+    }
+
+    public static WallState[,] Generate(int width, int height)
     {
         WallState[,] maze = new WallState[width, height];
         WallState initial = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN; //all four sides have walls
