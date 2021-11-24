@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    public struct Position
+    private struct Position
     {
         public int X;
         public int Y;
     }
 
-    public struct Neighbor //the shared wall attribute let's us delete the walls as we go through DFS
+    private struct Neighbor //the shared wall attribute let's us delete the walls as we go through DFS
     {
         public Position Position;
         public Cell SharedWall;
@@ -42,7 +42,7 @@ public class MazeGenerator : MonoBehaviour
         return DFS(maze, width, height);
     }
 
-    public static Cell[,] DFS(Cell[,] maze, int width, int height)
+    private static Cell[,] DFS(Cell[,] maze, int width, int height)
     {
         Stack<Position> toVisit = new Stack<Position>();
         System.Random random = new System.Random();
@@ -80,7 +80,7 @@ public class MazeGenerator : MonoBehaviour
         return maze;
     }
 
-    public static List<Neighbor> GetUnvisited(Position position, Cell[,] maze, int width, int height)
+    private static List<Neighbor> GetUnvisited(Position position, Cell[,] maze, int width, int height)
     {        
         List<Neighbor> neighbors = new List<Neighbor>();
 
@@ -116,7 +116,7 @@ public class MazeGenerator : MonoBehaviour
         return neighbors;
     }
 
-    public static Cell GetOppositeWall(Cell wall)
+    private static Cell GetOppositeWall(Cell wall)
     {
         switch (wall)
         {

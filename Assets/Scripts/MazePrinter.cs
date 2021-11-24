@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class MazePrinter : MonoBehaviour
 {
-    public int width;
-    public int height;
-    public float size;
-    public Transform wallPrefab;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    [SerializeField] private float size;
+    [SerializeField] private Transform wallPrefab;
 
     void Start()
     {

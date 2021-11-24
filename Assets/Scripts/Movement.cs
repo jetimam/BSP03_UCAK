@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float playerSpeed = 2.0f;
+    [SerializeField] private float playerSpeed;
 
     private Rigidbody2D rigidBody; //The components of the game object.
     private CircleCollider2D circleCollider;
