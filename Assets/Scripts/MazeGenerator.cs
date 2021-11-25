@@ -45,6 +45,7 @@ public class MazeGenerator : MonoBehaviour
     private static Cell[,] DFS(Cell[,] maze, int width, int height)
     {
         Stack<Position> toVisit = new Stack<Position>();
+        Neighbor currentCellAsNeighbor = new Neighbor{Position = new Position{X = 0, Y = 0}, SharedWall = Cell.RIGHT};
         System.Random random = new System.Random();
 
         Position initialPosition = new Position {X = random.Next(0, width), Y = random.Next(0, height)};
@@ -53,6 +54,7 @@ public class MazeGenerator : MonoBehaviour
                                                                     //it makes the walls overlap with each other.
         toVisit.Push(initialPosition);
 
+        int counter = 0;
         while(toVisit.Count > 0)
         {
             Position currentCell = toVisit.Pop();
@@ -73,7 +75,22 @@ public class MazeGenerator : MonoBehaviour
                 
                 maze[randomNeighborPosition.X, randomNeighborPosition.Y] |= Cell.VISITED; //0 XXXX | 1 0000 = 1 XXXX, meaning that the cell has been visited.
 
+                currentCellAsNeighbor = randomNeighbor;
                 toVisit.Push(randomNeighborPosition);
+            }
+            else
+            {
+                counter++;
+                if (counter % 3 == 0)
+                {
+                    if (!(currentCell.X == 0 && currentCellAsNeighbor.SharedWall == Cell.LEFT ||
+                        currentCell.Y == 0 && currentCellAsNeighbor.SharedWall == Cell.DOWN ||
+                        currentCell.X == width-1 && currentCellAsNeighbor.SharedWall == Cell.RIGHT ||
+                        currentCell.Y == height-1 && currentCellAsNeighbor.SharedWall == Cell.UP))
+                    {
+                        maze[currentCell.X, currentCell.Y] &= ~currentCellAsNeighbor.SharedWall;
+                    }
+                }
             }
         }
 

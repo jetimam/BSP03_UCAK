@@ -8,7 +8,6 @@ public class MazePrinter : MonoBehaviour
     [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private float size;
-    private readonly float wallThickness = 0.04493808f;
     [SerializeField] private Transform wallPrefab;
 
     void Start()
@@ -21,6 +20,7 @@ public class MazePrinter : MonoBehaviour
 
     public void Draw(MazeGenerator.Cell[,] maze)
     {
+        float wallThickness = 0.04493808f * size;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
