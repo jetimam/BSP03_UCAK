@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 2062819889}
   - component: {fileID: 2062819893}
   m_Layer: 0
-  m_Name: player
+  m_Name: dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -880,7 +880,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062819888}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.02, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -910,8 +910,9 @@ GameObject:
   - component: {fileID: 2110438885}
   - component: {fileID: 2110438884}
   - component: {fileID: 2110438883}
+  - component: {fileID: 2110438886}
   m_Layer: 0
-  m_Name: Maze
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -929,9 +930,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f60f0f300a24abf869a6d94c51f2fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 13
-  height: 9
-  size: 1
+  width: 26
+  height: 18
+  size: 0.5
   wallPrefab: {fileID: 1742305274759803816, guid: 18cfbb8c0771c4bb0b91d6c4b033e245, type: 3}
 --- !u!114 &2110438884
 MonoBehaviour:
@@ -959,3 +960,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110438886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110438882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea36865fe7e5478b956625f010cc4a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
