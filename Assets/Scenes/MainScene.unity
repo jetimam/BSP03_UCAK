@@ -837,3 +837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea36865fe7e5478b956625f010cc4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preyPrefab: {fileID: 2503362224836367311, guid: 2946524e1fde9408cb80521478336ac2, type: 3}
+  hunterPrefab: {fileID: 6572705919015414552, guid: eb4b77b59655f4420b5111ab3d12b72b, type: 3}
+  width: 13
+  height: 9
+  size: 1
