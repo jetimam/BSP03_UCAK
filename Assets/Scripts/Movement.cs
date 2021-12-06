@@ -4,81 +4,51 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float playerSpeed;
+	[SerializeField] private float playerSpeed;
+	private float size;
+	private GameClock gameClock;
 
-    private Rigidbody2D rigidBody; //The components of the game object.
-    private CircleCollider2D circleCollider;
-    private SpriteRenderer spriteRenderer;
+	private float timeNeeded = 1f;
+	private float timeElapsedLerp = 0;
 
-    private float camHeight, camWidth, hitboxHeight, hitboxWidth;
+	private readonly string pathFindingType = "random";
 
-    void Start()
-    {
-        rigidBody = GetComponent<Rigidbody2D>();
-        circleCollider = GetComponent<CircleCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+	IPathFinding randomAI;
 
-        InitializeBounds(circleCollider);
-    }
+	void Start()
+	{
+		gameClock = GameObject.Find("Game").GetComponent<GameLoop>().gameClock;
+		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
+		randomAI = new RandomAI(gameClock);
+	}
 
-    void Update()
-    {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+	void Update()
+	{
+		
+		Vector3 destination = randomAI.Update(transform.position);
 
-        Vector3 movement = new Vector3(x, y, 0);
-    
-        transform.Translate((movement * playerSpeed) * Time.deltaTime);
-    }
+		switch(pathFindingType)
+		{
+			case "random":
+				LerpTest(transform.position, destination, size);
+				break;
+		}
+	}
 
-    public void InitializeBounds(CircleCollider2D circleCollider)
-    {
-        Camera camera = Camera.main;
+	public void LerpTest(Vector3 startPosition, Vector3 destination, float size)
+	{
+		timeElapsedLerp += Time.deltaTime;
+		float pathPercentage = timeElapsedLerp/timeNeeded;
+		transform.position = Vector3.Lerp(startPosition, destination, pathPercentage);
+	}
+	
+	public void ManualMovement()
+	{
+		float x = Input.GetAxis("Horizontal");
+		float y = Input.GetAxis("Vertical");
 
-        hitboxHeight = circleCollider.radius / 2; //length from the center to the edge
-
-        camHeight = camera.orthographicSize - hitboxHeight; //length from the center to the edge
-        camWidth = camHeight * camera.aspect;
-    }
-
-    public bool InCamera(float camHeight, float camWidth)
-    {
-        return (transform.position.y < camHeight &&
-        transform.position.y > -camHeight &&
-        transform.position.x < camWidth &&
-        transform.position.x > -camWidth);
-    }
-
-    public void MoveAgent(Vector3 movement)
-    {
-        if (movement.y > 0)
-        {
-            transform.Translate((movement * playerSpeed) * Time.deltaTime);
-        }
-        else
-        {
-            transform.Translate((movement * playerSpeed) * Time.deltaTime);
-        }
-    }
-
-    public void WallPush(float camHeight, float camWidth)
-    {
-        Vector3 wallVector;
-
-        if (transform.position.y > camHeight || transform.position.y < -camHeight)
-        {
-            wallVector = new Vector3(0, 0 - transform.position.y, 0); //Pushes the player from the upper and lower walls
-        }
-        else
-        {
-            wallVector = new Vector3(0 - transform.position.x, 0, 0); //Pushes the player from the left and right walls
-        }
-
-        transform.Translate(wallVector * Time.deltaTime);
-    }
-
-    public void PlayerRotate(Vector3 movement, SpriteRenderer spriteRenderer)
-    {
-        spriteRenderer.flipX = (movement.x < 0);
-    }
+		Vector3 movement = new Vector3(x, y, 0);
+	
+		transform.Translate((movement * playerSpeed) * Time.deltaTime);
+	}
 }
