@@ -13,25 +13,27 @@ public class MovementPrey : MonoBehaviour
 	private readonly string pathFindingType = "random";
 
 	IPathFinding randomAI;
+	private GameClock gameClock;
 
 	void Start()
 	{
+		gameClock = new GameClock();
 		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
-		randomAI = new RandomAI(GameLoop.gameClock);
+		randomAI = new RandomAI();
 	}
 
 	void Update()
 	{
-		GameLoop.gameClock.Update(Time.time);
+		gameClock.Update(Time.time);
 
 		switch(pathFindingType)
 		{
 			case "random":
 				int index = 0;
 				List<Vector3> path = randomAI.Search(transform.position);
-				if (GameLoop.gameClock.Step() == GameLoop.gameClock.GetClockGate())
+				if (gameClock.Step() == gameClock.GetClockGate())
 				{
-					GameLoop.gameClock.SetClockGate(GameLoop.gameClock.GetClockGate()+1);
+					gameClock.SetClockGate(gameClock.GetClockGate()+1);
 					TeleportMovementTest(transform.position, path[index]);
 					index += 1;
 				}

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class MovementHunter : MonoBehaviour
 {
-	[SerializeField] private float playerSpeed;
+	[SerializeField] private float playerSpeed; //CHANGE THIS TO THE GENERAL MOVEMENT SCRIPT, REMOVE MOVEMENTHUNTER
 	private float size;
-	private GameClock gameClock;
 
 	private float timeNeeded = 1f;
 	private float timeElapsedLerp = 0;
@@ -14,12 +13,13 @@ public class MovementHunter : MonoBehaviour
 	private readonly string pathFindingType = "random";
 
 	IPathFinding randomAI;
+	private GameClock gameClock;
 
 	void Start()
 	{
-		gameClock = GameObject.Find("Game").GetComponent<GameLoop>().gameClock;
+		gameClock = new GameClock();
 		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
-		randomAI = new RandomAI(gameClock);
+		randomAI = new RandomAI();
 	}
 
 	void Update()
@@ -34,7 +34,6 @@ public class MovementHunter : MonoBehaviour
 				if (gameClock.Step() == gameClock.GetClockGate())
 				{
 					gameClock.SetClockGate(gameClock.GetClockGate()+1);
-					// timeElapsedLerp = 0;
 					TeleportMovementTest(transform.position, path[index]);
 					index += 1;
 				}
@@ -45,7 +44,6 @@ public class MovementHunter : MonoBehaviour
 	public void TeleportMovementTest(Vector3 startPosition, Vector3 destination)
 	{
 		transform.position = destination;
-		// transform.Translate((destination * playerSpeed) * Time.deltaTime);
 	}
 
 	public void LerpTest(Vector3 startPosition, Vector3 destination)

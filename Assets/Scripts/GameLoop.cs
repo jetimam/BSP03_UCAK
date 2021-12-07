@@ -13,21 +13,12 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Transform hunterPrefab;
 
     private MazeGenerator.Cell[,] maze;
-    private Vector3 bottomLeftCoord;
-
-    public GameClock gameClock;
 
     void Start()
     {
-        gameClock = new GameClock();
         maze = MazeGenerator.Generate(width, height);
         MazeRenderer();
         PlayerRenderer();
-    }
-
-    void Update()
-    {
-        gameClock.Update();   
     }
 
     public void MazeRenderer()
