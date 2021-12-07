@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameClock
 {
 	private int clock = 0;
+	private int clockGate = 0;
 	private int min = 0;
 	private int max = 1;
 
@@ -26,8 +27,13 @@ public class GameClock
 		return this.clock;
 	}
 
-	public int GetMin()
+	public int GetClockGate()
 	{
-		return this.min;
+		return this.clockGate;
+	}
+
+	public void SetClockGate(int clockGate)
+	{
+		this.clockGate = clockGate;
 	}
 }

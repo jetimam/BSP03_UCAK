@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
 	private GameClock gameClock;
 
 	private float timeNeeded = 1f;
-	private float timeElapsedLerp;
+	private float timeElapsedLerp = 0;
 
 	private readonly string pathFindingType = "random";
 
@@ -25,18 +25,18 @@ public class Movement : MonoBehaviour
 	void Update()
 	{
 		gameClock.Update(Time.time);
-		List<Vector3> path = randomAI.Search(transform.position);
 
 		switch(pathFindingType)
 		{
 			case "random":
-				for (int i = 0; i < 10; i++)
+				int index = 0;
+				List<Vector3> path = randomAI.Search(transform.position);
+				if (gameClock.Step() == gameClock.GetClockGate())
 				{
-					if (Time.time == gameClock.Step())
-					{
-						timeElapsedLerp = 0;
-						LerpTest(transform.position, path[i]);
-					}
+					gameClock.SetClockGate(gameClock.GetClockGate()+1);
+					// timeElapsedLerp = 0;
+					LerpTest(transform.position, path[index]);
+					index += 1;
 				}
 				break;
 		}
