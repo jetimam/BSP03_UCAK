@@ -24,6 +24,7 @@ public class Movement : MonoBehaviour
 
 	void Update()
 	{
+		gameClock.Update(Time.time);
 		List<Vector3> path = randomAI.Search(transform.position);
 
 		switch(pathFindingType)
@@ -31,8 +32,11 @@ public class Movement : MonoBehaviour
 			case "random":
 				for (int i = 0; i < 10; i++)
 				{
-					timeElapsedLerp = 0;
-					LerpTest(transform.position, path[i]);
+					if (Time.time == gameClock.Step())
+					{
+						timeElapsedLerp = 0;
+						LerpTest(transform.position, path[i]);
+					}
 				}
 				break;
 		}

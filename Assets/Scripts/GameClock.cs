@@ -6,13 +6,17 @@ using UnityEngine;
 public class GameClock
 {
 	private int clock = 0;
+	private int min = 0;
+	private int max = 1;
 
 	public GameClock() {}
 
-	public void Update()
+	public void Update(float time)
 	{
-		if (Time.time == Math.Truncate(Time.time))
+		if (time > min && time < max)
 		{
+			min += 1;
+			max += 1;
 			clock += 1;
 		}
 	}
@@ -20,5 +24,10 @@ public class GameClock
 	public int Step()
 	{
 		return this.clock;
+	}
+
+	public int GetMin()
+	{
+		return this.min;
 	}
 }

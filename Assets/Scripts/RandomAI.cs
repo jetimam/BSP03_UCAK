@@ -29,11 +29,7 @@ public class RandomAI : IPathFinding
 
     public Vector3 Update(Vector3 startingPosition)
     {
-        if (Time.time == gameClock.Step())
-        {
-            lastDestination = GetDestination(startingPosition);
-            return lastDestination;
-        }
+        lastDestination = GetDestination(startingPosition);
         return lastDestination;
     }
 
