@@ -37,7 +37,7 @@ public class RandomAI : IPathFinding
     {
         System.Random random = new System.Random();
 
-        float rnd = random.Next(1, 4);
+        float rnd = random.Next(1, 5);
 
         if (rnd == 1)
         {

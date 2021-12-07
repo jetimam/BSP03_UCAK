@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class MovementPrey : MonoBehaviour
 {
 	[SerializeField] private float playerSpeed;
 	private float size;
@@ -35,11 +35,17 @@ public class Movement : MonoBehaviour
 				{
 					gameClock.SetClockGate(gameClock.GetClockGate()+1);
 					// timeElapsedLerp = 0;
-					LerpTest(transform.position, path[index]);
+					TeleportMovementTest(transform.position, path[index]);
 					index += 1;
 				}
 				break;
 		}
+	}
+
+	public void TeleportMovementTest(Vector3 startPosition, Vector3 destination)
+	{
+		transform.position = destination;
+		// transform.Translate((destination * playerSpeed) * Time.deltaTime);
 	}
 
 	public void LerpTest(Vector3 startPosition, Vector3 destination)
