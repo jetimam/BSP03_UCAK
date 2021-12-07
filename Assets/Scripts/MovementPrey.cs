@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class MovementPrey : MonoBehaviour
 {
-	[SerializeField] private float playerSpeed;
+	[SerializeField] private float playerSpeed; //CHANGE THIS TO THE GENERAL MOVEMENT SCRIPT, REMOVE MOVEMENTHUNTER
 	private float size;
-	private GameClock gameClock;
 
 	private float timeNeeded = 1f;
 	private float timeElapsedLerp = 0;
@@ -17,24 +16,22 @@ public class MovementPrey : MonoBehaviour
 
 	void Start()
 	{
-		gameClock = GameObject.Find("Game").GetComponent<GameLoop>().gameClock;
 		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
-		randomAI = new RandomAI(gameClock);
+		randomAI = new RandomAI(GameLoop.gameClock);
 	}
 
 	void Update()
 	{
-		gameClock.Update(Time.time);
+		GameLoop.gameClock.Update(Time.time);
 
 		switch(pathFindingType)
 		{
 			case "random":
 				int index = 0;
 				List<Vector3> path = randomAI.Search(transform.position);
-				if (gameClock.Step() == gameClock.GetClockGate())
+				if (GameLoop.gameClock.Step() == GameLoop.gameClock.GetClockGate())
 				{
-					gameClock.SetClockGate(gameClock.GetClockGate()+1);
-					// timeElapsedLerp = 0;
+					GameLoop.gameClock.SetClockGate(GameLoop.gameClock.GetClockGate()+1);
 					TeleportMovementTest(transform.position, path[index]);
 					index += 1;
 				}
@@ -45,7 +42,6 @@ public class MovementPrey : MonoBehaviour
 	public void TeleportMovementTest(Vector3 startPosition, Vector3 destination)
 	{
 		transform.position = destination;
-		// transform.Translate((destination * playerSpeed) * Time.deltaTime);
 	}
 
 	public void LerpTest(Vector3 startPosition, Vector3 destination)

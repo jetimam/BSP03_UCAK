@@ -6,13 +6,11 @@ public class RandomAI : IPathFinding
 {
     private Transform hunterPrefab;
     private Transform preyPrefab;
-    private GameClock gameClock;
     private Vector3 lastDestination;
     private float size;
 
-    public RandomAI(GameClock gameClock)
+    public RandomAI()
     {
-        this.gameClock = gameClock;
         this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
