@@ -16,7 +16,16 @@ public class RandomAI : IPathFinding
         this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
-    public void Search() {}
+    public List<Vector3> Search(Vector3 startingPosition)
+    {
+        List<Vector3> randomPath = new List<Vector3>();
+        for (int i = 0; i < 10; i++)
+        {
+            randomPath.Add(Update(startingPosition));
+            startingPosition = randomPath[i];
+        }
+        return randomPath;
+    }
 
     public Vector3 Update(Vector3 startingPosition)
     {

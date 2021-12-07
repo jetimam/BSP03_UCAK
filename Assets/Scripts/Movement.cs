@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
 	private GameClock gameClock;
 
 	private float timeNeeded = 1f;
-	private float timeElapsedLerp = 0;
+	private float timeElapsedLerp;
 
 	private readonly string pathFindingType = "random";
 
@@ -24,18 +24,21 @@ public class Movement : MonoBehaviour
 
 	void Update()
 	{
-		
-		Vector3 destination = randomAI.Update(transform.position);
+		List<Vector3> path = randomAI.Search(transform.position);
 
 		switch(pathFindingType)
 		{
 			case "random":
-				LerpTest(transform.position, destination, size);
+				for (int i = 0; i < 10; i++)
+				{
+					timeElapsedLerp = 0;
+					LerpTest(transform.position, path[i]);
+				}
 				break;
 		}
 	}
 
-	public void LerpTest(Vector3 startPosition, Vector3 destination, float size)
+	public void LerpTest(Vector3 startPosition, Vector3 destination)
 	{
 		timeElapsedLerp += Time.deltaTime;
 		float pathPercentage = timeElapsedLerp/timeNeeded;
