@@ -7,6 +7,4 @@ public interface IPathFinding
     public List<Vector3> Search(Vector3 startingPosition);
 
     public Vector3 GetDestination(Vector3 startingPosition);
-
-    public Vector3 Update(Vector3 startingPosition);
 }

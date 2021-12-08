@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovementPrey : MonoBehaviour
 {
-	[SerializeField] private float playerSpeed; //CHANGE THIS TO THE GENERAL MOVEMENT SCRIPT, REMOVE MOVEMENTHUNTER
+	[SerializeField] private float playerSpeed;
 	private float size;
 
 	private float timeNeeded = 1f;
@@ -12,14 +12,18 @@ public class MovementPrey : MonoBehaviour
 
 	private readonly string pathFindingType = "random";
 
-	IPathFinding randomAI;
+	private IPathFinding randomAI;
 	private GameClock gameClock;
+	private List<Vector3> path;
+
+	private bool pathGenerationGate = false;
+	private int index = 0;
 
 	void Start()
 	{
 		gameClock = new GameClock();
 		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
-		randomAI = new RandomAI();
+		randomAI = new RandomAI(1);
 	}
 
 	void Update()
@@ -29,13 +33,20 @@ public class MovementPrey : MonoBehaviour
 		switch(pathFindingType)
 		{
 			case "random":
-				int index = 0;
-				List<Vector3> path = randomAI.Search(transform.position);
+				if (!pathGenerationGate)
+				{
+					path = randomAI.Search(transform.position);
+				}
+				pathGenerationGate = true;
+
 				if (gameClock.Step() == gameClock.GetClockGate())
 				{
-					gameClock.SetClockGate(gameClock.GetClockGate()+1);
-					TeleportMovementTest(transform.position, path[index]);
-					index += 1;
+					if (index < 10)
+					{
+						gameClock.SetClockGate(gameClock.GetClockGate()+1);
+						TeleportMovementTest(transform.position, path[index]);
+						index += 1;
+					}
 				}
 				break;
 		}

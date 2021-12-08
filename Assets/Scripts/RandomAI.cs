@@ -7,10 +7,14 @@ public class RandomAI : IPathFinding
     private Transform hunterPrefab;
     private Transform preyPrefab;
     private Vector3 lastDestination;
+    private System.Random random;
     private float size;
+    private int seed;
 
-    public RandomAI()
+    public RandomAI(int seed)
     {
+        this.random = new System.Random(seed);
+        this.seed = seed;
         this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
@@ -19,22 +23,25 @@ public class RandomAI : IPathFinding
         List<Vector3> randomPath = new List<Vector3>();
         for (int i = 0; i < 10; i++)
         {
-            randomPath.Add(Update(startingPosition));
+            randomPath.Add(GetDestination(startingPosition));
             startingPosition = randomPath[i];
         }
+        // for (int i = 0; i < randomPath.Count; i++)
+        // {
+        //     Debug.Log(randomPath[i]);
+        // }
+        // Debug.Log(randomPath);
         return randomPath;
     }
 
-    public Vector3 Update(Vector3 startingPosition)
-    {
-        lastDestination = GetDestination(startingPosition);
-        return lastDestination;
-    }
+    // public Vector3 Update(Vector3 startingPosition)
+    // {
+    //     lastDestination = GetDestination(startingPosition);
+    //     return lastDestination;
+    // }
 
     public Vector3 GetDestination(Vector3 startingPosition)
     {
-        System.Random random = new System.Random();
-
         float rnd = random.Next(1, 5);
 
         if (rnd == 1)
