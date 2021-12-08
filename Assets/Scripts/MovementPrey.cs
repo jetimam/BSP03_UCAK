@@ -5,10 +5,10 @@ using UnityEngine;
 public class MovementPrey : MonoBehaviour
 {
 	[SerializeField] private float playerSpeed;
-	private float size;
+	// private float size;
 
-	private float timeNeeded = 1f;
-	private float timeElapsedLerp = 0;
+	// private float timeNeeded = 1f;
+	// private float timeElapsedLerp = 0;
 
 	private readonly string pathFindingType = "random";
 
@@ -16,14 +16,18 @@ public class MovementPrey : MonoBehaviour
 	private GameClock gameClock;
 	private List<Vector3> path;
 
-	private bool pathGenerationGate = false;
-	private int index = 0;
+	private bool pathGenerationGate;
+	private int index;
+	private int randomMoveCap;
 
 	void Start()
 	{
 		gameClock = new GameClock();
-		size = GameObject.Find("Game").GetComponent<GameLoop>().size;
+		// size = GameObject.Find("Game").GetComponent<GameLoop>().size;
 		randomAI = new RandomAI(1);
+		index = 0;
+		pathGenerationGate = false;
+		randomMoveCap = 10;
 	}
 
 	void Update()
@@ -35,13 +39,13 @@ public class MovementPrey : MonoBehaviour
 			case "random":
 				if (!pathGenerationGate)
 				{
-					path = randomAI.Search(transform.position);
+					path = randomAI.GetPath(transform.position);
 				}
 				pathGenerationGate = true;
 
 				if (gameClock.Step() == gameClock.GetClockGate())
 				{
-					if (index < 10)
+					if (index < randomMoveCap)
 					{
 						gameClock.SetClockGate(gameClock.GetClockGate()+1);
 						TeleportMovementTest(transform.position, path[index]);
@@ -57,20 +61,20 @@ public class MovementPrey : MonoBehaviour
 		transform.position = destination;
 	}
 
-	public void LerpTest(Vector3 startPosition, Vector3 destination)
-	{
-		timeElapsedLerp += Time.deltaTime;
-		float pathPercentage = timeElapsedLerp/timeNeeded;
-		transform.position = Vector3.Lerp(startPosition, destination, pathPercentage);
-	}
+	// public void LerpTest(Vector3 startPosition, Vector3 destination)
+	// {
+	// 	timeElapsedLerp += Time.deltaTime;
+	// 	float pathPercentage = timeElapsedLerp/timeNeeded;
+	// 	transform.position = Vector3.Lerp(startPosition, destination, pathPercentage);
+	// }
 	
-	public void ManualMovement()
-	{
-		float x = Input.GetAxis("Horizontal");
-		float y = Input.GetAxis("Vertical");
+	// public void ManualMovement()
+	// {
+	// 	float x = Input.GetAxis("Horizontal");
+	// 	float y = Input.GetAxis("Vertical");
 
-		Vector3 movement = new Vector3(x, y, 0);
+	// 	Vector3 movement = new Vector3(x, y, 0);
 	
-		transform.Translate((movement * playerSpeed) * Time.deltaTime);
-	}
+	// 	transform.Translate((movement * playerSpeed) * Time.deltaTime);
+	// }
 }
