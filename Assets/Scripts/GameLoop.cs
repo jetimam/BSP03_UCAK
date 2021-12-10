@@ -11,6 +11,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Transform wallPrefab;
     [SerializeField] private Transform preyPrefab;
     [SerializeField] private Transform hunterPrefab;
+    private Transform hunter;
+    private Transform prey;
 
     private MazeGenerator.Cell[,] maze;
 
@@ -19,6 +21,12 @@ public class GameLoop : MonoBehaviour
         maze = MazeGenerator.Generate(width, height);
         MazeRenderer();
         PlayerRenderer();
+    }
+
+    void Update()
+    {
+        if (CheckWin())
+            Debug.Log("Hunter wins!");
     }
 
     public void MazeRenderer()
@@ -72,10 +80,15 @@ public class GameLoop : MonoBehaviour
     {
         System.Random random = new System.Random();
         //float playerSize = 0.2378656f * size;
-        Transform prey = Instantiate(preyPrefab, transform);
+        prey = Instantiate(preyPrefab, transform);
         prey.position = new Vector3(random.Next(-width/2, width/2), random.Next(-height/2, height/2), 0);
-        Transform hunter = Instantiate(hunterPrefab, transform);
+        hunter = Instantiate(hunterPrefab, transform);
         hunter.position = new Vector3(random.Next(-width/2, width/2), random.Next(-height/2, height/2), 0);
+    }
+
+    public bool CheckWin()
+    {
+        return (prey.position == hunter.position);
     }
     
     public int GetMazeWidth()
