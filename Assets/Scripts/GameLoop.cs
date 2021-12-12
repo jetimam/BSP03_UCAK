@@ -81,14 +81,17 @@ public class GameLoop : MonoBehaviour
         System.Random random = new System.Random();
         //float playerSize = 0.2378656f * size;
         prey = Instantiate(preyPrefab, transform);
-        prey.position = new Vector3(random.Next(-width/2, width/2), random.Next(-height/2, height/2), 0);
+        prey.position = new Vector3(random.Next(0, 0), random.Next(0, 0), 0);
         hunter = Instantiate(hunterPrefab, transform);
-        hunter.position = new Vector3(random.Next(-width/2, width/2), random.Next(-height/2, height/2), 0);
+        hunter.position = new Vector3(random.Next(1, 1), random.Next(0, 0), 0);
     }
 
     public bool CheckWin()
     {
-        return (prey.position == hunter.position);
+        return (prey.position == new Vector3(hunter.position.x+1, hunter.position.y) || 
+                prey.position == new Vector3(hunter.position.x-1, hunter.position.y) || 
+                prey.position == new Vector3(hunter.position.x, hunter.position.y+1) || 
+                prey.position == new Vector3(hunter.position.x, hunter.position.y-1));
     }
     
     public int GetMazeWidth()
