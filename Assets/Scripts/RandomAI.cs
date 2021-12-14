@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomAI : IPathFinding
+public class RandomAI
 {
     private Transform hunterPrefab;
     private Transform preyPrefab;

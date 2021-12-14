@@ -12,7 +12,7 @@ public class MovementHunter : MonoBehaviour
 
 	private readonly string pathFindingType = "random";
 
-	private IPathFinding randomAI;
+	private RandomAI randomAI;
 	private GameClock gameClock;
 	private List<Vector3> path;
 

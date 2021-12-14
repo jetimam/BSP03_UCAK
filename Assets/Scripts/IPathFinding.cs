@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPathFinding
 {
-    public List<Vector3> GetPath(Vector3 startingPosition);
+    public List<Vector3> Search(Vector3 startingPosition, Vector3 destination);
 
-    public Vector3 GetDestination(Vector3 startingPosition);
+    public List<Vector3> GenerateChildren(Vector3 parent);
 }
