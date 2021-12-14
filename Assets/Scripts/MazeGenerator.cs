@@ -44,7 +44,7 @@ public class MazeGenerator : MonoBehaviour
 
     private static Cell[,] DFS(Cell[,] maze, int width, int height)
     {
-        Stack<Position> toVisit = new Stack<Position>();
+        Stack<Position> stack = new Stack<Position>();
         Neighbor currentCellAsNeighbor = new Neighbor{Position = new Position{X = 0, Y = 0}, SharedWall = Cell.RIGHT};
         System.Random random = new System.Random();
 
@@ -52,17 +52,17 @@ public class MazeGenerator : MonoBehaviour
 
         maze[initialPosition.X, initialPosition.Y] |= Cell.VISITED; //because of this maze indexing i cant make the size of the paths dynamic, 
                                                                     //it makes the walls overlap with each other.
-        toVisit.Push(initialPosition);
+        stack.Push(initialPosition);
 
         int counter = 0;
-        while(toVisit.Count > 0)
+        while(stack.Count > 0)
         {
-            Position currentCell = toVisit.Pop();
+            Position currentCell = stack.Pop();
             List<Neighbor> neighbors = GetUnvisited(currentCell, maze, width, height);
 
             if (neighbors.Count > 0)
             {
-                toVisit.Push(currentCell);
+                stack.Push(currentCell);
 
                 int randomNeighborIndex = random.Next(0,neighbors.Count);
                 Neighbor randomNeighbor = neighbors[randomNeighborIndex]; //neighbor has a position and a sharedwall attribute
@@ -76,7 +76,7 @@ public class MazeGenerator : MonoBehaviour
                 maze[randomNeighborPosition.X, randomNeighborPosition.Y] |= Cell.VISITED; //0 XXXX | 1 0000 = 1 XXXX, meaning that the cell has been visited.
 
                 currentCellAsNeighbor = randomNeighbor;
-                toVisit.Push(randomNeighborPosition);
+                stack.Push(randomNeighborPosition);
             }
             else
             {

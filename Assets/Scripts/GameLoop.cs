@@ -14,7 +14,7 @@ public class GameLoop : MonoBehaviour
     private Transform hunter;
     private Transform prey;
 
-    private MazeGenerator.Cell[,] maze;
+    public MazeGenerator.Cell[,] maze;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class GameLoop : MonoBehaviour
     void Update()
     {
         if (CheckWin())
-            Debug.Log("Hunter wins!");
+            Debug.Log("Hunter wins! Prey: " + prey.position + " | Hunter: " + hunter.position);
     }
 
     public void MazeRenderer()
