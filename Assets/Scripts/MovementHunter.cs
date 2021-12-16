@@ -12,7 +12,7 @@ public class MovementHunter : MonoBehaviour
 
 	private readonly string pathFindingType = "random";
 
-	private RandomAI randomAI;
+	private IPathFinding randomAI;
 	private GameClock gameClock;
 	private List<Vector3> path;
 
@@ -39,9 +39,9 @@ public class MovementHunter : MonoBehaviour
 			case "random":
 				if (!pathGenerationGate)
 				{
-					path = randomAI.GetPath(transform.position);
+					path = randomAI.Search(transform.position, transform.position);
+					pathGenerationGate = true;
 				}
-				pathGenerationGate = true;
 
 				if (gameClock.Step() == gameClock.GetClockGate())
 				{

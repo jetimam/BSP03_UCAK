@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomAI
+public class RandomAI : IPathFinding
 {
     private Transform hunterPrefab;
     private Transform preyPrefab;
@@ -15,38 +15,44 @@ public class RandomAI
         // this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
-    public List<Vector3> GetPath(Vector3 startingPosition)
+    public List<Vector3> Search(Vector3 startingPosition, Vector3 destination)
     {
         List<Vector3> randomPath = new List<Vector3>();
 
         for (int i = 0; i < 10; i++)
         {
-            randomPath.Add(GetDestination(startingPosition));
+            randomPath.Add(GenerateChildren(startingPosition)[0]);
             startingPosition = randomPath[i];
         }
 
         return randomPath;
     }
 
-    public Vector3 GetDestination(Vector3 startingPosition)
+    public List<Vector3> GenerateChildren(Vector3 parent)
     {
+        List<Vector3> path = new List<Vector3>();
+
         float rnd = random.Next(1, 5);
 
         if (rnd == 1)
         {
-            return new Vector3(startingPosition.x + 1, startingPosition.y, 0);
+            path.Add(new Vector3(parent.x + 1, parent.y, 0));
+            return path;
         }
         else if (rnd == 2)
         {
-            return new Vector3(startingPosition.x - 1, startingPosition.y, 0);
+            path.Add(new Vector3(parent.x - 1, parent.y, 0));
+            return path;
         }
         else if (rnd == 3)
         {
-            return new Vector3(startingPosition.x, startingPosition.y + 1 , 0);
+            path.Add(new Vector3(parent.x, parent.y + 1 , 0));
+            return path;
         }
         else
         {
-            return new Vector3(startingPosition.x, startingPosition.y - 1 , 0);
+            path.Add(new Vector3(parent.x, parent.y - 1 , 0));
+            return path;
         }
     }
 }
