@@ -10,22 +10,21 @@ public class MovementHunter : MonoBehaviour
 	// private float timeNeeded = 1f;
 	// private float timeElapsedLerp = 0;
 
-	private readonly string pathFindingType = "random";
+	private readonly string pathFindingType = "dfs";
 
-	private IPathFinding randomAI;
+	private IPathFinding randomAI, dfsAI;
 	private GameClock gameClock;
 	private List<Vector3> path;
 
 	private bool pathGenerationGate;
 	private int index;
-	private int randomMoveCap;
+	private int randomMoveCap, pathMoveCap;
 
 	void Start()
 	{
+		AIInitialization();
 		gameClock = new GameClock();
 		// size = GameObject.Find("Game").GetComponent<GameLoop>().size;
-		randomAI = new RandomAI(2);
-		index = 0;
 		pathGenerationGate = false;
 		randomMoveCap = 10;
 	}
@@ -37,22 +36,66 @@ public class MovementHunter : MonoBehaviour
 		switch(pathFindingType)
 		{
 			case "random":
-				if (!pathGenerationGate)
-				{
-					path = randomAI.Search(transform.position, transform.position);
-					pathGenerationGate = true;
-				}
-
-				if (gameClock.Step() == gameClock.GetClockGate())
-				{
-					if (index < randomMoveCap)
-					{
-						gameClock.SetClockGate(gameClock.GetClockGate()+1);
-						TeleportMovementTest(transform.position, path[index]);
-						index += 1;
-					}
-				}
+				RandomMovement();
 				break;
+			case "dfs":
+				DFSMovement();
+				break;
+		}
+	}
+
+	public void AIInitialization()
+	{
+		switch(pathFindingType)
+		{
+			case "random":
+				randomAI = new RandomAI(2);
+				break;
+			case "dfs":
+				dfsAI = new DepthFirstAI();
+				break;
+		}
+	}
+
+	public void RandomMovement()
+	{
+		if (!pathGenerationGate)
+		{
+			path = randomAI.Search(transform.position, transform.position);
+			index = 0;
+			pathGenerationGate = true;
+		}
+
+		if (gameClock.Step() == gameClock.GetClockGate())
+		{
+			if (index < randomMoveCap)
+			{
+				gameClock.SetClockGate(gameClock.GetClockGate()+1);
+				TeleportMovementTest(transform.position, path[index]);
+				index += 1;
+			}
+		}
+	}
+
+	public void DFSMovement()
+	{
+		if(!pathGenerationGate)
+		{
+			// Vector3 destination = GameObject.Find("Game/Prey(Clone)").transform.position;
+			Vector3 destination = new Vector3(3, -3, 0);
+			path = dfsAI.Search(transform.position, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z));
+			// Debug.Log(path.Count);
+			pathGenerationGate = true;
+		}
+
+		if (gameClock.Step() == gameClock.GetClockGate())
+		{
+			if (index < pathMoveCap)
+			{
+				gameClock.SetClockGate(gameClock.GetClockGate()+1);
+				TeleportMovementTest(transform.position, path[index]);
+				index += 1;
+			}
 		}
 	}
 

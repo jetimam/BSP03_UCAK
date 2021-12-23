@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameLoop : MonoBehaviour
@@ -44,12 +42,8 @@ public class GameLoop : MonoBehaviour
 
                 InstantiateWalls(cell, position, i, j);
 
-                MatchCoordinates(position, i, j);
+                MatchCoordinates(position, cell);
             }
-        }
-        foreach(Vector3 key in coordinateTable.Keys)
-        {
-            Debug.Log(String.Format("{0}: {1}", key, coordinateTable[key]));
         }
     }
 
@@ -92,10 +86,9 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    public void MatchCoordinates(Vector3 position, int i, int j)
+    public void MatchCoordinates(Vector3 position, MazeGenerator.Cell cell)
     {
-        (int, int) matrixIndex = (i, j);
-        coordinateTable.Add(position, matrixIndex);
+        coordinateTable.Add(position, cell);
     }
 
     public void PlayerRenderer()

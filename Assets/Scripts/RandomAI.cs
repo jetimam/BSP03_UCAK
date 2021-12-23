@@ -55,4 +55,9 @@ public class RandomAI : IPathFinding
             return path;
         }
     }
+
+    public List<Vector3> BackTrack(Vector3[] stack) //filler method, not necessary, implemented for interface reasons
+    {
+        return new List<Vector3>();
+    }
 }
