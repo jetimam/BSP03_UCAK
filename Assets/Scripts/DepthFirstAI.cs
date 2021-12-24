@@ -27,25 +27,29 @@ public class DepthFirstAI : IPathFinding
 
         frontier.Push(startingPosition);
 
-        while (!found || frontier.Count > 0)
+        while (!found && frontier.Count > 0)
         {
+            // Debug.Log("popping stack");
             currentCell = frontier.Pop();
+            Debug.Log(currentCell.x + " " + currentCell.y);
             visited.Add(currentCell);
 
             if (currentCell == destination)
             {
+                Debug.Log("found");
                 found = true;
             }
             else 
             {
+                // Debug.Log("generating children");
                 List<Vector3> children = GenerateChildren(currentCell);
-                Debug.Log(children.Count);
-                if (children.Count !> 0)
+                // Debug.Log("generated children");
+                if (children.Count < 0)
                 {
-                    int index = path.Count-1;
-                    Debug.Log(index);
-                    path.RemoveAt(index);
-                    frontier.Push(path[index]);
+                    // Debug.Log("backtracking");
+                    path.RemoveAt(path.Count-1);
+                    frontier.Push(path[path.Count-1]);
+                    // Debug.Log("backtracked");
                 }
                 else
                 {
@@ -55,6 +59,7 @@ public class DepthFirstAI : IPathFinding
                     }
 
                     path.Add(frontier.Peek());
+                    // Debug.Log("pushed children on the stack");
                 }
             }
         }
@@ -86,14 +91,12 @@ public class DepthFirstAI : IPathFinding
         //         childrenFinal.Remove(child);
         //     }
         // }
-        int cap = childrenTemp.Count;
-
-        for(int i = 0; i < cap; i++)
+        
+        for (int i = childrenTemp.Count-1; i >= 0; i--)
         {
             if (visited.Contains(childrenTemp[i]))
             {
-                childrenFinal.Remove(childrenTemp[i]);
-                cap -= 1;
+                childrenFinal.RemoveAt(i);
             }
         }
 

@@ -79,17 +79,20 @@ public class MovementHunter : MonoBehaviour
 
 	public void DFSMovement()
 	{
-		if(!pathGenerationGate)
-		{
-			// Vector3 destination = GameObject.Find("Game/Prey(Clone)").transform.position;
-			Vector3 destination = new Vector3(3, -3, 0);
-			path = dfsAI.Search(transform.position, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z));
-			// Debug.Log(path.Count);
-			pathGenerationGate = true;
-		}
+		// if(!pathGenerationGate)
+		// {
+		// 	Vector3 destination = new Vector3(3, -3, 0);
+		// 	path = dfsAI.Search(transform.position, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z));
+		// 	// Debug.Log(path.Count);
+		// 	pathGenerationGate = true;
+		// }
 
 		if (gameClock.Step() == gameClock.GetClockGate())
 		{
+			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
+			Debug.Log("prey position: " + destination.x + " " + destination.y);
+			// Vector3 destination = new Vector3(3, -3, 0);
+			path = dfsAI.Search(transform.position, destination);
 			if (index < pathMoveCap)
 			{
 				gameClock.SetClockGate(gameClock.GetClockGate()+1);
