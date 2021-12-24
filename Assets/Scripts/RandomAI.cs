@@ -7,11 +7,13 @@ public class RandomAI : IPathFinding
     private Transform hunterPrefab;
     private Transform preyPrefab;
     private System.Random random;
+    private Hashtable coordinateTable;
     // private float size;
 
     public RandomAI(int seed)
     {
         this.random = new System.Random(seed);
+        this.coordinateTable = GameObject.Find("Game").GetComponent<GameLoop>().coordinateTable;
         // this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
@@ -29,10 +31,27 @@ public class RandomAI : IPathFinding
     }
 
     public List<Vector3> GenerateChildren(Vector3 parent)
-    {
+    {        
         List<Vector3> path = new List<Vector3>();
+        List<int> possibleChildren = new List<int>();
 
-        float rnd = random.Next(1, 5);
+        MazeGenerator.Cell cell = (MazeGenerator.Cell)coordinateTable[parent];
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (!cell.HasFlag(MazeGenerator.Cell.RIGHT))
+                possibleChildren.Add(1);
+            if (!cell.HasFlag(MazeGenerator.Cell.LEFT))
+                possibleChildren.Add(2);
+            if (!cell.HasFlag(MazeGenerator.Cell.UP))
+                possibleChildren.Add(3);
+            if (!cell.HasFlag(MazeGenerator.Cell.DOWN))
+                possibleChildren.Add(4);
+        }
+
+        int rnd = random.Next(0, possibleChildren.Count);
+
+        rnd = possibleChildren[rnd];
 
         if (rnd == 1)
         {
@@ -49,11 +68,13 @@ public class RandomAI : IPathFinding
             path.Add(new Vector3(parent.x, parent.y + 1 , 0));
             return path;
         }
-        else
+        else if (rnd == 4)
         {
             path.Add(new Vector3(parent.x, parent.y - 1 , 0));
             return path;
         }
+
+        return path;
     }
 
     public List<Vector3> BackTrack(Vector3[] stack) //filler method, not necessary, implemented for interface reasons

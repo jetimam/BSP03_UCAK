@@ -44,19 +44,6 @@ public class MovementHunter : MonoBehaviour
 		}
 	}
 
-	public void AIInitialization()
-	{
-		switch(pathFindingType)
-		{
-			case "random":
-				randomAI = new RandomAI(2);
-				break;
-			case "dfs":
-				dfsAI = new DepthFirstAI();
-				break;
-		}
-	}
-
 	public void RandomMovement()
 	{
 		if (!pathGenerationGate)
@@ -68,10 +55,13 @@ public class MovementHunter : MonoBehaviour
 
 		if (gameClock.Step() == gameClock.GetClockGate())
 		{
+			for (int i = 0; i < path.Count; i++)
+				Debug.Log(path[i].x + " " + path[i].y);
+
 			if (index < randomMoveCap)
 			{
 				gameClock.SetClockGate(gameClock.GetClockGate()+1);
-				TeleportMovementTest(transform.position, path[index]);
+				TeleportMovementTest(path[index]);
 				index += 1;
 			}
 		}
@@ -87,24 +77,40 @@ public class MovementHunter : MonoBehaviour
 		// 	pathGenerationGate = true;
 		// }
 
-		if (gameClock.Step() == gameClock.GetClockGate())
+		if (secondPassed())
 		{
 			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
-			Debug.Log("prey position: " + destination.x + " " + destination.y);
-			// Vector3 destination = new Vector3(3, -3, 0);
+			// Debug.Log("prey position: " + destination.x + " " + destination.y);
+
 			path = dfsAI.Search(transform.position, destination);
-			if (index < pathMoveCap)
-			{
-				gameClock.SetClockGate(gameClock.GetClockGate()+1);
-				TeleportMovementTest(transform.position, path[index]);
-				index += 1;
-			}
+			
+			gameClock.SetClockGate(gameClock.GetClockGate()+1);
+
+			TeleportMovementTest(path[0]);
 		}
 	}
 
-	public void TeleportMovementTest(Vector3 startPosition, Vector3 destination)
+	public bool secondPassed()
+	{
+		return (gameClock.Step() == gameClock.GetClockGate());
+	}
+
+	public void TeleportMovementTest(Vector3 destination)
 	{
 		transform.position = destination;
+	}
+
+	public void AIInitialization()
+	{
+		switch(pathFindingType)
+		{
+			case "random":
+				randomAI = new RandomAI(2);
+				break;
+			case "dfs":
+				dfsAI = new DepthFirstAI();
+				break;
+		}
 	}
 
 	// public void LerpTest(Vector3 startPosition, Vector3 destination)

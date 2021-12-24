@@ -31,7 +31,6 @@ public class DepthFirstAI : IPathFinding
         {
             // Debug.Log("popping stack");
             currentCell = frontier.Pop();
-            Debug.Log(currentCell.x + " " + currentCell.y);
             visited.Add(currentCell);
 
             if (currentCell == destination)

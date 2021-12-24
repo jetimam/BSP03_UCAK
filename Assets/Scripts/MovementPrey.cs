@@ -37,22 +37,27 @@ public class MovementPrey : MonoBehaviour
 		switch(pathFindingType)
 		{
 			case "random":
-				if (!pathGenerationGate)
-				{
-					path = randomAI.Search(transform.position, transform.position);
-				}
-				pathGenerationGate = true;
-
-				if (gameClock.Step() == gameClock.GetClockGate())
-				{
-					if (index < randomMoveCap)
-					{
-						gameClock.SetClockGate(gameClock.GetClockGate()+1);
-						TeleportMovementTest(transform.position, path[index]);
-						index += 1;
-					}
-				}
+				RandomMovement();
 				break;
+		}
+	}
+
+	public void RandomMovement()
+	{
+		if (!pathGenerationGate)
+		{
+			path = randomAI.Search(transform.position, transform.position);
+		}
+		pathGenerationGate = true;
+
+		if (gameClock.Step() == gameClock.GetClockGate())
+		{
+			if (index < randomMoveCap)
+			{
+				gameClock.SetClockGate(gameClock.GetClockGate()+1);
+				TeleportMovementTest(transform.position, path[index]);
+				index += 1;
+			}
 		}
 	}
 
