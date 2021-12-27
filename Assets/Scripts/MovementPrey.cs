@@ -37,7 +37,7 @@ public class MovementPrey : MonoBehaviour
 		switch(pathFindingType)
 		{
 			case "random":
-				RandomMovement();
+				// RandomMovement();
 				break;
 		}
 	}

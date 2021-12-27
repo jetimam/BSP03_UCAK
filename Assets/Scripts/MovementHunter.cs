@@ -7,14 +7,15 @@ public class MovementHunter : MonoBehaviour
 	[SerializeField] private float playerSpeed;
 	// private float size;
 
-	// private float timeNeeded = 1f;
-	// private float timeElapsedLerp = 0;
+	private float timeNeeded = 1f;
+	private float timeElapsedLerp = 0;
 
 	private readonly string pathFindingType = "dfs";
 
 	private IPathFinding randomAI, dfsAI;
 	private GameClock gameClock;
 	private List<Vector3> path;
+	private Vector3 startingPosition;
 
 	private bool pathGenerationGate;
 	private int index;
@@ -23,6 +24,7 @@ public class MovementHunter : MonoBehaviour
 	void Start()
 	{
 		AIInitialization();
+		startingPosition = transform.position;
 		gameClock = new GameClock();
 		// size = GameObject.Find("Game").GetComponent<GameLoop>().size;
 		pathGenerationGate = false;
@@ -69,25 +71,29 @@ public class MovementHunter : MonoBehaviour
 
 	public void DFSMovement()
 	{
-		// if(!pathGenerationGate)
-		// {
-		// 	Vector3 destination = new Vector3(3, -3, 0);
-		// 	path = dfsAI.Search(transform.position, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z));
-		// 	// Debug.Log(path.Count);
-		// 	pathGenerationGate = true;
-		// }
+		if(!pathGenerationGate)
+		{
+			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
+			path = dfsAI.Search(transform.position, destination);
+
+			pathGenerationGate = true;
+
+			// for (int i = 0; i < path.Count; i++)
+			// {
+			// 	Debug.Log(path[i]);
+			// }
+		}
 
 		if (secondPassed())
 		{
-			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
-			// Debug.Log("prey position: " + destination.x + " " + destination.y);
-
-			path = dfsAI.Search(transform.position, destination);
-			
+			Debug.Log("second has passed");
 			gameClock.SetClockGate(gameClock.GetClockGate()+1);
 
-			TeleportMovementTest(path[0]);
+			startingPosition = transform.position;
+			index += 1;
 		}
+
+		TeleportMovementTest(path[index]);
 	}
 
 	public bool secondPassed()
@@ -113,20 +119,22 @@ public class MovementHunter : MonoBehaviour
 		}
 	}
 
-	// public void LerpTest(Vector3 startPosition, Vector3 destination)
-	// {
-	// 	timeElapsedLerp += Time.deltaTime;
-	// 	float pathPercentage = timeElapsedLerp/timeNeeded;
-	// 	transform.position = Vector3.Lerp(startPosition, destination, pathPercentage);
-	// }
+	public void LerpTest(Vector3 startPosition, Vector3 destination)
+	{
+		Debug.Log("lerping");
+		timeElapsedLerp += Time.deltaTime;
+		float pathPercentage = timeElapsedLerp/timeNeeded;
+		transform.position = Vector3.Lerp(startPosition, destination, pathPercentage);
+		Debug.Log("lerping done");
+	}
 	
-	// public void ManualMovement()
-	// {
-	// 	float x = Input.GetAxis("Horizontal");
-	// 	float y = Input.GetAxis("Vertical");
+	public void ManualMovement()
+	{
+		float x = Input.GetAxis("Horizontal");
+		float y = Input.GetAxis("Vertical");
 
-	// 	Vector3 movement = new Vector3(x, y, 0);
+		Vector3 movement = new Vector3(x, y, 0);
 	
-	// 	transform.Translate((movement * playerSpeed) * Time.deltaTime);
-	// }
+		transform.Translate((movement * playerSpeed) * Time.deltaTime);
+	}
 }

@@ -9,7 +9,7 @@ public class DepthFirstAI : IPathFinding
     private Vector3 currentCell;
     private List<Vector3> path;
     private List<Vector3> visited;
-    private Stack<Vector3> frontier;
+    private Stack<Vector3> stack;
     private bool found;
 
     public DepthFirstAI()
@@ -22,15 +22,16 @@ public class DepthFirstAI : IPathFinding
     {
         path = new List<Vector3>();
         visited = new List<Vector3>();
-        frontier = new Stack<Vector3>();
+        stack = new Stack<Vector3>();
         found = false;
 
-        frontier.Push(startingPosition);
+        stack.Push(startingPosition);
 
-        while (!found && frontier.Count > 0)
+        while (!found && stack.Count > 0)
         {
             // Debug.Log("popping stack");
-            currentCell = frontier.Pop();
+            currentCell = stack.Pop();
+            Debug.Log("at cell: " + currentCell.x + " " + currentCell.y);
             visited.Add(currentCell);
 
             if (currentCell == destination)
@@ -40,24 +41,24 @@ public class DepthFirstAI : IPathFinding
             }
             else 
             {
-                // Debug.Log("generating children");
                 List<Vector3> children = GenerateChildren(currentCell);
                 // Debug.Log("generated children");
                 if (children.Count < 0)
                 {
                     // Debug.Log("backtracking");
-                    path.RemoveAt(path.Count-1);
-                    frontier.Push(path[path.Count-1]);
-                    // Debug.Log("backtracked");
+                    path.Remove(currentCell);
+                    stack.Push(path[path.Count-1]);
+                    Debug.Log("going back to:" + path[path.Count-1].x + " " + path[path.Count-1].y);
                 }
                 else
                 {
                     foreach (Vector3 child in children)
                     {
-                        frontier.Push(child);
+                        Debug.Log("generating children: " + child.x + " " + child.y);
+                        stack.Push(child);
                     }
 
-                    path.Add(frontier.Peek());
+                    path.Add(stack.Peek());
                     // Debug.Log("pushed children on the stack");
                 }
             }
