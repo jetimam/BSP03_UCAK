@@ -62,7 +62,7 @@ public class MovementHunter : MonoBehaviour
 
 			if (index < randomMoveCap)
 			{
-				gameClock.SetClockGate(gameClock.GetClockGate()+1);
+				gameClock.IncrementClockGate();
 				TeleportMovementTest(path[index]);
 				index += 1;
 			}
@@ -87,7 +87,7 @@ public class MovementHunter : MonoBehaviour
 		if (secondPassed())
 		{
 			Debug.Log("second has passed");
-			gameClock.SetClockGate(gameClock.GetClockGate()+1);
+			gameClock.IncrementClockGate();
 
 			startingPosition = transform.position;
 			index += 1;

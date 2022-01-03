@@ -32,8 +32,8 @@ public class GameClock
 		return this.clockGate;
 	}
 
-	public void SetClockGate(int clockGate)
+	public void IncrementClockGate()
 	{
-		this.clockGate = clockGate;
+		this.clockGate += 1;
 	}
 }

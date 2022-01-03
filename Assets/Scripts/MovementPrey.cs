@@ -54,7 +54,7 @@ public class MovementPrey : MonoBehaviour
 		{
 			if (index < randomMoveCap)
 			{
-				gameClock.SetClockGate(gameClock.GetClockGate()+1);
+				gameClock.IncrementClockGate();
 				TeleportMovementTest(transform.position, path[index]);
 				index += 1;
 			}
