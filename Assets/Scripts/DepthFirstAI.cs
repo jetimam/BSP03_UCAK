@@ -26,12 +26,12 @@ public class DepthFirstAI : IPathFinding
         found = false;
 
         stack.Push(startingPosition);
+        path.Add(startingPosition);
 
         while (!found && stack.Count > 0)
         {
-            // Debug.Log("popping stack");
             currentCell = stack.Pop();
-            Debug.Log("at cell: " + currentCell.x + " " + currentCell.y);
+            // Debug.Log("at cell: " + currentCell.x + " " + currentCell.y);
             visited.Add(currentCell);
 
             if (currentCell == destination)
@@ -42,24 +42,25 @@ public class DepthFirstAI : IPathFinding
             else 
             {
                 List<Vector3> children = GenerateChildren(currentCell);
-                // Debug.Log("generated children");
-                if (children.Count < 0)
+                if (children.Count <= 0)
                 {
-                    // Debug.Log("backtracking");
-                    path.Remove(currentCell);
-                    stack.Push(path[path.Count-1]);
-                    Debug.Log("going back to:" + path[path.Count-1].x + " " + path[path.Count-1].y);
+                    path.RemoveAt(path.Count-1);
+
+                    if (path.Count != 0)
+                    {
+                        stack.Push(path[path.Count-1]);
+                        // Debug.Log("going back to:" + path[path.Count-1].x + " " + path[path.Count-1].y);
+                    }
                 }
                 else
                 {
                     foreach (Vector3 child in children)
                     {
-                        Debug.Log("generating children: " + child.x + " " + child.y);
+                        // Debug.Log("generating children: " + child.x + " " + child.y);
                         stack.Push(child);
                     }
 
                     path.Add(stack.Peek());
-                    // Debug.Log("pushed children on the stack");
                 }
             }
         }

@@ -51,7 +51,7 @@ public class MovementHunter : MonoBehaviour
 		if (!pathGenerationGate)
 		{
 			path = randomAI.Search(transform.position, transform.position);
-			index = 0;
+			index = 1;
 			pathGenerationGate = true;
 		}
 
