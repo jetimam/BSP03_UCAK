@@ -71,29 +71,22 @@ public class MovementHunter : MonoBehaviour
 
 	public void DFSMovement()
 	{
-		if(!pathGenerationGate)
+		if (secondPassed())
 		{
 			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
 			path = dfsAI.Search(transform.position, destination);
+			for (int i = 0; i < 5; i++)
+			{
+				Debug.Log(path[i]);
+			}
+			Debug.Log("===============");
 
-			pathGenerationGate = true;
-
-			// for (int i = 0; i < path.Count; i++)
-			// {
-			// 	Debug.Log(path[i]);
-			// }
-		}
-
-		if (secondPassed())
-		{
-			Debug.Log("second has passed");
 			gameClock.IncrementClockGate();
 
 			startingPosition = transform.position;
-			index += 1;
 		}
 
-		TeleportMovementTest(path[index]);
+		TeleportMovementTest(path[1]);
 	}
 
 	public bool secondPassed()

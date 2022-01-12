@@ -21,11 +21,7 @@ public class RandomAI : IPathFinding
     {
         List<Vector3> randomPath = new List<Vector3>();
 
-        for (int i = 0; i < 10; i++)
-        {
-            randomPath.Add(GenerateChildren(startingPosition)[0]);
-            startingPosition = randomPath[i];
-        }
+        randomPath.Add(GenerateChildren(startingPosition)[0]);
 
         return randomPath;
     }

@@ -16,18 +16,11 @@ public class MovementPrey : MonoBehaviour
 	private GameClock gameClock;
 	private List<Vector3> path;
 
-	private bool pathGenerationGate;
-	private int index;
-	private int randomMoveCap;
-
 	void Start()
 	{
 		gameClock = new GameClock();
 		// size = GameObject.Find("Game").GetComponent<GameLoop>().size;
 		randomAI = new RandomAI(1);
-		index = 0;
-		pathGenerationGate = false;
-		randomMoveCap = 10;
 	}
 
 	void Update()
@@ -44,21 +37,19 @@ public class MovementPrey : MonoBehaviour
 
 	public void RandomMovement()
 	{
-		if (!pathGenerationGate)
+		if (secondPassed())
 		{
 			path = randomAI.Search(transform.position, transform.position);
-		}
-		pathGenerationGate = true;
 
-		if (gameClock.Step() == gameClock.GetClockGate())
-		{
-			if (index < randomMoveCap)
-			{
-				gameClock.IncrementClockGate();
-				TeleportMovementTest(transform.position, path[index]);
-				index += 1;
-			}
+			gameClock.IncrementClockGate();
 		}
+
+		TeleportMovementTest(transform.position, path[0]);
+	}
+
+	public bool secondPassed()
+	{
+		return (gameClock.Step() == gameClock.GetClockGate());
 	}
 
 	public void TeleportMovementTest(Vector3 startPosition, Vector3 destination)
