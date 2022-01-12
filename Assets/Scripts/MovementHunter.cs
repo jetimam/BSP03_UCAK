@@ -10,9 +10,9 @@ public class MovementHunter : MonoBehaviour
 	private float timeNeeded = 1f;
 	private float timeElapsedLerp = 0;
 
-	private readonly string pathFindingType = "dfs";
+	private readonly string pathFindingType = "bfs";
 
-	private IPathFinding randomAI, dfsAI;
+	private IPathFinding randomAI, bfsAI;
 	private GameClock gameClock;
 	private List<Vector3> path;
 	private Vector3 startingPosition;
@@ -40,8 +40,8 @@ public class MovementHunter : MonoBehaviour
 			case "random":
 				RandomMovement();
 				break;
-			case "dfs":
-				DFSMovement();
+			case "bfs":
+				BFSMovement();
 				break;
 		}
 	}
@@ -69,12 +69,12 @@ public class MovementHunter : MonoBehaviour
 		}
 	}
 
-	public void DFSMovement()
+	public void BFSMovement()
 	{
 		if (secondPassed())
 		{
 			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
-			path = dfsAI.Search(transform.position, destination);
+			path = bfsAI.Search(transform.position, destination);
 			for (int i = 0; i < 5; i++)
 			{
 				Debug.Log(path[i]);
@@ -106,8 +106,8 @@ public class MovementHunter : MonoBehaviour
 			case "random":
 				randomAI = new RandomAI(2);
 				break;
-			case "dfs":
-				dfsAI = new DepthFirstAI();
+			case "bfs":
+				bfsAI = new BreadthFirstAI();
 				break;
 		}
 	}

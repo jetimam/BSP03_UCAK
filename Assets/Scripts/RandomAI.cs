@@ -7,7 +7,7 @@ public class RandomAI : IPathFinding
     private Transform hunterPrefab;
     private Transform preyPrefab;
     private System.Random random;
-    private Hashtable coordinateTable;
+    private Dictionary<Vector3, MazeGenerator.Cell> coordinateTable;
     // private float size;
 
     public RandomAI(int seed)
@@ -73,7 +73,7 @@ public class RandomAI : IPathFinding
         return path;
     }
 
-    public List<Vector3> BackTrack(Vector3[] stack) //filler method, not necessary, implemented for interface reasons
+    public List<Vector3> BackTrack(Vector3 cell) //filler method, not necessary, implemented for interface reasons
     {
         return new List<Vector3>();
     }

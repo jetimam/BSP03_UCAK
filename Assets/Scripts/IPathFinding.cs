@@ -8,5 +8,5 @@ public interface IPathFinding
 
     public List<Vector3> GenerateChildren(Vector3 parent);
 
-    public List<Vector3> BackTrack(Vector3[] stack);
+    public List<Vector3> BackTrack(Vector3 cell);
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -14,12 +15,12 @@ public class GameLoop : MonoBehaviour
 
     public MazeGenerator.Cell[,] maze;
 
-    public Hashtable coordinateTable;
+    public Dictionary<Vector3, MazeGenerator.Cell> coordinateTable;
 
     void Start()
     {
         maze = MazeGenerator.Generate(width, height);
-        coordinateTable = new Hashtable();
+        coordinateTable = new Dictionary<Vector3, MazeGenerator.Cell>();
 
         MazeRenderer();
         PlayerRenderer();
