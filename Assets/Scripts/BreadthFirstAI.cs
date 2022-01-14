@@ -45,7 +45,6 @@ public class BreadthFirstAI : IPathFinding
             else
             {
                 List<Vector3> children = GenerateChildren(currentCell);
-                int childrenCount = children.Count;
 
                 foreach (Vector3 child in children)
                 {
