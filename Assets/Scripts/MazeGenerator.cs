@@ -66,17 +66,16 @@ public class MazeGenerator : MonoBehaviour
 
                 int randomNeighborIndex = random.Next(0,neighbors.Count);
                 Neighbor randomNeighbor = neighbors[randomNeighborIndex]; //neighbor has a position and a sharedwall attribute
-                Position randomNeighborPosition = randomNeighbor.Position;
                 
                 maze[currentCell.X, currentCell.Y] &= ~randomNeighbor.SharedWall; // removes the shared wall -> 1111 & ~0001 = 1110 (all walls except the shared one)
-                maze[randomNeighborPosition.X, randomNeighborPosition.Y] &= ~GetOppositeWall(randomNeighbor.SharedWall);
+                maze[randomNeighbor.Position.X, randomNeighbor.Position.Y] &= ~GetOppositeWall(randomNeighbor.SharedWall);
                 // ^^^^ need to do the same since each cell have their own walls, if we remove only one of the shared walls, the wall would still be there because of the neighbor cell
                 //need to get opposite wall because (0,0)'s shared wall is the right wall, while (1,0)'s is the left wall
                 
-                maze[randomNeighborPosition.X, randomNeighborPosition.Y] |= Cell.VISITED; //0 XXXX | 1 0000 = 1 XXXX, meaning that the cell has been visited.
+                maze[randomNeighbor.Position.X, randomNeighbor.Position.Y] |= Cell.VISITED; //0 XXXX | 1 0000 = 1 XXXX, meaning that the cell has been visited.
 
                 currentCellAsNeighbor = randomNeighbor;
-                stack.Push(randomNeighborPosition);
+                stack.Push(randomNeighbor.Position);
             }
             else
             {
