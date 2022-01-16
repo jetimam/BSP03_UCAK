@@ -79,21 +79,26 @@ public class MazeGenerator : MonoBehaviour
             }
             else
             {
-                counter++;
-                if (counter % 3 == 0)
-                {
-                    if (!(currentCell.X == 0 && currentCellAsNeighbor.SharedWall == Cell.LEFT ||
-                        currentCell.Y == 0 && currentCellAsNeighbor.SharedWall == Cell.DOWN ||
-                        currentCell.X == width-1 && currentCellAsNeighbor.SharedWall == Cell.RIGHT ||
-                        currentCell.Y == height-1 && currentCellAsNeighbor.SharedWall == Cell.UP))
-                    {
-                        maze[currentCell.X, currentCell.Y] &= ~currentCellAsNeighbor.SharedWall;
-                    }
-                }
+                RemoveDeadEnd(maze, counter, currentCell, currentCellAsNeighbor, width, height);
             }
         }
 
         return maze;
+    }
+
+    private static void RemoveDeadEnd(Cell[,] maze, int counter, Position currentCell, Neighbor currentCellAsNeighbor, int width, int height)
+    {
+        counter++;
+        if (counter % 3 == 0)
+        {
+            if (!(currentCell.X == 0 && currentCellAsNeighbor.SharedWall == Cell.LEFT ||
+                currentCell.Y == 0 && currentCellAsNeighbor.SharedWall == Cell.DOWN ||
+                currentCell.X == width-1 && currentCellAsNeighbor.SharedWall == Cell.RIGHT ||
+                currentCell.Y == height-1 && currentCellAsNeighbor.SharedWall == Cell.UP))
+            {
+                maze[currentCell.X, currentCell.Y] &= ~currentCellAsNeighbor.SharedWall;
+            }
+        }
     }
 
     private static List<Neighbor> GetUnvisited(Position position, Cell[,] maze, int width, int height)
