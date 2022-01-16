@@ -6,7 +6,7 @@ public class BreadthFirstAI : IPathFinding
 {
     private MazeGenerator.Cell[,] maze;
     private Dictionary<Vector3, MazeGenerator.Cell> coordinateTable;
-    private Vector3 currentCell, previousCell, startingPosition;
+    private Vector3 currentCell, startingPosition;
     private List<Vector3> path;
     private List<Vector3> visited;
     private Queue<Vector3> queue;
@@ -22,7 +22,6 @@ public class BreadthFirstAI : IPathFinding
     public List<Vector3> Search(Vector3 startingPosition, Vector3 destination)
     {
         this.startingPosition = startingPosition;
-        previousCell = startingPosition;
         path = new List<Vector3>();
         visited = new List<Vector3>();
         queue = new Queue<Vector3>();
@@ -35,7 +34,6 @@ public class BreadthFirstAI : IPathFinding
         while (!found && queue.Count > 0)
         {
             currentCell = queue.Dequeue();
-            Debug.Log("adding" + previousCell.x + ", " + previousCell.y + "and" + currentCell.x + ", " + currentCell.y);
 
             if (currentCell == destination)
             {
@@ -44,9 +42,7 @@ public class BreadthFirstAI : IPathFinding
             }
             else
             {
-                List<Vector3> children = GenerateChildren(currentCell);
-
-                foreach (Vector3 child in children)
+                foreach (Vector3 child in GenerateChildren(currentCell))
                 {
                     queue.Enqueue(child);
                     visited.Add(child);
