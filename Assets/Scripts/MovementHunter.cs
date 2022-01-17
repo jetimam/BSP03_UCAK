@@ -75,16 +75,13 @@ public class MovementHunter : MonoBehaviour
 		{
 			Vector3 destination = GameObject.FindWithTag("Prey").transform.position;
 			path = bfsAI.Search(transform.position, destination);
-			for (int i = 0; i < 5; i++)
-			{
-				Debug.Log(path[i]);
-			}
-			Debug.Log("===============");
 
 			gameClock.IncrementClockGate();
 
 			startingPosition = transform.position;
 		}
+
+		
 
 		TeleportMovementTest(path[1]);
 	}
