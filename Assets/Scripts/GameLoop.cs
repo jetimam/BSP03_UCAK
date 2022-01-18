@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLoop : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameLoop : MonoBehaviour
     private Transform hunter;
     private Transform prey;
 
+    [SerializeField] private GameOverScreen gameOverScreen;
     public MazeGenerator.Cell[,] maze;
 
     public Dictionary<Vector3, MazeGenerator.Cell> coordinateTable;
@@ -28,8 +30,8 @@ public class GameLoop : MonoBehaviour
 
     void Update()
     {
-        if (CheckWin())
-            Debug.Log("Hunter wins! Prey: " + prey.position + " | Hunter: " + hunter.position);
+        if (CheckWinNew())
+            SceneManager.LoadScene("Game Over Scene");
     }
 
     public void MazeRenderer()
@@ -108,6 +110,11 @@ public class GameLoop : MonoBehaviour
                 prey.position == new Vector3(hunter.position.x-1, hunter.position.y) || 
                 prey.position == new Vector3(hunter.position.x, hunter.position.y+1) || 
                 prey.position == new Vector3(hunter.position.x, hunter.position.y-1));
+    }
+
+    public bool CheckWinNew()
+    {
+        return prey.position == hunter.position;
     }
     
     public int GetMazeWidth()
