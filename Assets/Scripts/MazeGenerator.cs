@@ -89,7 +89,7 @@ public class MazeGenerator : MonoBehaviour
     private static void RemoveDeadEnd(Cell[,] maze, int counter, Position currentCell, Neighbor currentCellAsNeighbor, int width, int height)
     {
         counter++;
-        if (counter % 1 == 0)
+        if (counter % 2 == 0)
         {
             if (!(currentCell.X == 0 && currentCellAsNeighbor.SharedWall == Cell.LEFT ||
                 currentCell.Y == 0 && currentCellAsNeighbor.SharedWall == Cell.DOWN ||

@@ -81,9 +81,15 @@ public class MovementHunter : MonoBehaviour
 			startingPosition = transform.position;
 		}
 
-		
-
-		TeleportMovementTest(path[1]);
+		if (path.Count == 1)
+		{
+			TeleportMovementTest(path[0]);
+		}
+		try
+		{
+			TeleportMovementTest(path[1]);
+		} catch{}
+			
 	}
 
 	public bool secondPassed()

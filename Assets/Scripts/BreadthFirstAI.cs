@@ -37,7 +37,6 @@ public class BreadthFirstAI : IPathFinding
 
             if (currentCell == destination)
             {
-                Debug.Log("found");
                 found = true;
             }
             else

@@ -31,7 +31,11 @@ public class GameLoop : MonoBehaviour
     void Update()
     {
         if (CheckWinNew())
-            SceneManager.LoadScene("Game Over Scene");
+        {
+            GameObject.FindGameObjectWithTag("Hunter").GetComponent<MovementHunter>().enabled = false;
+            GameObject.FindGameObjectWithTag("Prey").GetComponent<MovementPrey>().enabled = false;
+            gameOverScreen.Setup();
+        }
     }
 
     public void MazeRenderer()
