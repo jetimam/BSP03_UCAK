@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class GameClock
 {
-	private int clock = 0;
-	private int clockGate = 0;
-	private int min = 0;
-	private int max = 1;
+	private float clock = 0;
+	private float clockGate = 0;
+	private float min = 0;
+	private float max = 1;
 
 	public GameClock() {}
 
@@ -16,24 +16,24 @@ public class GameClock
 	{
 		if (time > min && time < max)
 		{
-			min += 1;
-			max += 1;
-			clock += 1;
+			min += 0.5f;
+			max += 0.5f;
+			clock += 0.5f;
 		}
 	}
 
-	public int Step()
+	public float Step()
 	{
 		return this.clock;
 	}
 
-	public int GetClockGate()
+	public float GetClockGate()
 	{
 		return this.clockGate;
 	}
 
 	public void IncrementClockGate()
 	{
-		this.clockGate += 1;
+		this.clockGate += 0.5f;
 	}
 }
