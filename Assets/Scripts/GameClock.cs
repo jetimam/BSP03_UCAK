@@ -8,16 +8,14 @@ public class GameClock
 	private float clock = 0;
 	private float clockGate = 0;
 	private float min = 0;
-	private float max = 1;
 
 	public GameClock() {}
 
 	public void Update(float time)
 	{
-		if (time > min && time < max)
+		if (time > min)
 		{
 			min += 0.5f;
-			max += 0.5f;
 			clock += 0.5f;
 		}
 	}
