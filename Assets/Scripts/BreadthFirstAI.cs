@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -95,17 +94,4 @@ public class BreadthFirstAI : IPathFinding
 
         return path;
     }
-
-    // public List<Vector3> BackTrack(Vector3[] queue)
-    // {
-    //     List<Vector3> path = new List<Vector3>();
-
-    //     for (int i = 0; i < queue.Length-1; i++)
-    //     {
-    //         Vector3 movement = queue[i+1] - queue[i]; //this should convert the queue of positions into a list of movements
-    //         path.Add(movement);
-    //     }
-
-    //     return path;
-    // }
 }

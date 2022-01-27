@@ -1,20 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomAI : IPathFinding
 {
-    private Transform hunterPrefab;
-    private Transform preyPrefab;
     private System.Random random;
     private Dictionary<Vector3, MazeGenerator.Cell> coordinateTable;
-    // private float size;
 
     public RandomAI(int seed)
     {
         this.random = new System.Random(seed);
         this.coordinateTable = GameObject.Find("Game").GetComponent<GameLoop>().coordinateTable;
-        // this.size = GameObject.Find("Game").GetComponent<GameLoop>().size;
     }
 
     public List<Vector3> Search(Vector3 startingPosition, Vector3 destination)
@@ -73,7 +68,7 @@ public class RandomAI : IPathFinding
         return path;
     }
 
-    public List<Vector3> BackTrack(Vector3 cell) //filler method, not necessary, implemented for interface reasons
+    public List<Vector3> BackTrack(Vector3 cell) //filler method, not necessary, implemented for the interface
     {
         return new List<Vector3>();
     }
